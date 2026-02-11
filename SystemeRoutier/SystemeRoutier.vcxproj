@@ -123,7 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Intersection.cpp" />
+    <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Road.cpp" />
     <ClCompile Include="SystemeRoutier.cpp" />
+    <ClCompile Include="TrafficSystem.cpp" />
+    <ClCompile Include="Vehicle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Intersection.h" />
+    <ClInclude Include="IntersectionType.h" />
+    <ClInclude Include="Queue.h" />
+    <ClInclude Include="Road.h" />
+    <ClInclude Include="TrafficLightState.h" />
+    <ClInclude Include="TrafficSystem.h" />
+    <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
