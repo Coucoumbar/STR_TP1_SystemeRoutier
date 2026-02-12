@@ -27,13 +27,13 @@ private :
 	int maxGreenTime;
 
 public :
-	Intersection(string, IntersectionType);
+	Intersection(string, IntersectionType, Road&, Road&, Road&, Road&, int, int);
 
 	//Process a light cycle of the intersection
 	void processCycle();
 	//Updates the lights state
 	void updateLights();
 	//Display the intersection's informations
-	void display();
+	void display() const;
 };
 
