@@ -11,7 +11,11 @@ void Road::addVehicle(Vehicle& newVehicle) {
 }
 
 Vehicle* Road::nextVehicle() {
-	Vehicle* next = new Vehicle(vehicles.dequeue());
+	Vehicle* next;
+
+	try { next = new Vehicle(vehicles.dequeue()); }
+	catch (runtime_error& e) { next = nullptr; }
+
 	return next;
 }
 

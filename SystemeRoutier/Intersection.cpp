@@ -20,6 +20,32 @@ Intersection::Intersection(string name, IntersectionType type, Road& north, Road
 
 void Intersection::processCycle() {
 
+	//Priority light
+	if (type != IntersectionType::FOUR_WAY_STOP)
+	{
+		if (meridianLight != TrafficLightState::RED)
+		{
+			north->nextVehicle();
+			south->nextVehicle();
+		}
+		else
+		{
+			east->nextVehicle();
+			west->nextVehicle();
+		}
+
+		if (++cycles >= maxGreenTime - 1) {
+			updateLights();
+		}
+		else if (type == IntersectionType::PRIORITY_LIGHT && cycles > minGreenTime)
+		{
+
+		}
+	}
+	else
+	{
+
+	}
 }
 
 void Intersection::updateLights() {
@@ -33,12 +59,14 @@ void Intersection::updateLights() {
 		//Set meridian to its next state and turn equator green if needed
 		if (--meridian == equator) {
 			equator = 2;
+			cycles = 0;
 		}
 	}
 	else {
 		//Set equator to its next state and turn meridian green if needed
 		if (--equator == meridian) {
 			meridian = 2;
+			cycles = 0;
 		}
 	}
 

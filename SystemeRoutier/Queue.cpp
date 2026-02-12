@@ -32,8 +32,7 @@ void Queue::enqueue(const Vehicle& newVehicle) {
 Vehicle Queue::dequeue() {
 	if (size == 0)
 	{
-		cerr << "Cannot dequeue, queue is empty.";
-		return;
+		throw runtime_error("Cannot dequeue, queue is empty.");
 	}
 
 	Node* temp = front;
