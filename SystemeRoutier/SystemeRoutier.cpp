@@ -1,6 +1,8 @@
 #include <iostream>
 
+#include "TrafficSystem.h"
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "Hello World!\n";
 }

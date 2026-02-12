@@ -14,11 +14,12 @@ private :
 	string destination;
 
 public :
-	Vehicle(string, string, int, string);
+	Vehicle();
+	Vehicle(string, string, string);
 
 	//Increments the vehicle's waited time
 	void wait();
 	//Displays the vehicle's informations
-	void display();
+	void display() const;
 };
 

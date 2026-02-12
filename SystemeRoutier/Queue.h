@@ -5,30 +5,34 @@
 
 using namespace std;
 
-#define QUEUE_MAX_SIZE 10
-
 class Queue
 {
 
 private :
-	Vehicle queue[QUEUE_MAX_SIZE];
-	int back;
-	int front;
+	Node* front;
+	Node* back;
+	int size;
 
 public :
+	Queue();
+	~Queue();
+
 	//Adds a vehicle to the back of the queue
 	void enqueue(const Vehicle&);
 	//Removes the first vehicle from the queue
-	Vehicle* dequeue();
+	Vehicle dequeue();
 	//Returns the first vehicle from the queue
 	Vehicle& peek() const;
 	//Returns true if the queue is empty
 	bool isEmpty() const;
-	//Returns true if the queue is full
-	bool isFull() const;
 	//Returns the number of vehicles currently in the queue
-	int size() const;
+	int count() const;
 	//TBD
-	void update();
+	void goThrough(const bool, const bool);
 };
 
+struct Node
+{
+	Vehicle data;
+	Node* next;
+};

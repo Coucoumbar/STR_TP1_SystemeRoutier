@@ -4,10 +4,6 @@
 #include <vector>
 #include "Intersection.h"
 
-#include "Road.h"
-#include "TrafficLightState.h"
-#include "IntersectionType.h"
-
 using namespace std;
 
 class TrafficSystem

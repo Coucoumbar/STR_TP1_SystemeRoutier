@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "Vehicle.h"
 #include "Queue.h"
 
 using namespace std;
@@ -15,6 +14,8 @@ private :
 	string direction;
 
 public :
+	Road(string, string);
+
 	//Adds a vehicle to the road's queue
 	void addVehicle(Vehicle&);
 	//Moves the road's queue's front vehicle
@@ -24,6 +25,6 @@ public :
 	//Displays the road informations
 	void display();
 	//Returns the number of vehicles in this road's queue
-	int vehicleCount();
+	int vehicleCount() const;
 };
 
