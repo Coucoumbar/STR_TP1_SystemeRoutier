@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Vehicle.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -9,8 +10,8 @@ class Queue
 {
 
 private :
-	Node* front;
-	Node* back;
+	Node* front_index;
+	Node* back_index;
 	int size;
 
 public :
@@ -18,21 +19,18 @@ public :
 	~Queue();
 
 	//Adds a vehicle to the back of the queue
-	void enqueue(const Vehicle&);
+	void insert(const Vehicle&);
 	//Removes the first vehicle from the queue
-	Vehicle dequeue();
+	Vehicle retrieve();
+	//Erase the first vehicle from the queue
+	void erase();
 	//Returns the first vehicle from the queue
 	Vehicle& peek() const;
 	//Returns true if the queue is empty
-	bool isEmpty() const;
+	bool is_empty() const;
 	//Returns the number of vehicles currently in the queue
 	int count() const;
-	//TBD
-	void goThrough(const bool, const bool);
-};
 
-struct Node
-{
-	Vehicle data;
-	Node* next;
+	void info() const;
+	void wait();
 };

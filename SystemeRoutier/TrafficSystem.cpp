@@ -1,30 +1,31 @@
 #include "TrafficSystem.h"
 #include <iostream>
 
-TrafficSystem::TrafficSystem() {
-	totalTimeWaited = 0;
-	totalVehiclesProcessed = 0;
-}
+TrafficSystem::TrafficSystem() : 
+	total_wait_time(0), 
+	total_vehicles_processed(0) {}
 
-void TrafficSystem::addIntersection(Intersection* intersection) {
+void TrafficSystem::add_intersection(Intersection* intersection) {
 	intersections.push_back(intersection);
 }
 
-void TrafficSystem::processCycles() {
-
-}
-
-void TrafficSystem::intersectionsStates() {
-	cout << "Intersections informations [Total:" << intersections.size() << "] :" << endl;
+void TrafficSystem::process_cycles() {
 	for (Intersection* inter : intersections) {
-		inter->display();
+		inter->process_cycle();
 	}
 }
 
-int TrafficSystem::getTotalTimeWaited() {
-	return totalTimeWaited;
+void TrafficSystem::info() {
+	cout << "Intersections informations [Total:" << intersections.size() << "] :" << endl;
+	for (Intersection* inter : intersections) {
+		inter->info();
+	}
 }
 
-int TrafficSystem::getTotalVehiclesProcessed() {
-	return totalVehiclesProcessed;
+int TrafficSystem::get_total_wait_time() {
+	return total_wait_time;
+}
+
+int TrafficSystem::get_total_vehicles_processed() {
+	return total_vehicles_processed;
 }

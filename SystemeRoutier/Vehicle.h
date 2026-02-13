@@ -10,17 +10,21 @@ class Vehicle
 private :
 	string id;
 	string type;
-	int waited;
 	string destination;
+	int wait_time;
 
 public :
 	Vehicle();
 	Vehicle(string, string, string);
 
+	string get_id() const;
+	string get_type() const;
+	string get_destination() const;
+	int get_wait_time() const;
+
 	//Increments the vehicle's waited time
 	void wait();
-	int waitedTime() const;
 	//Displays the vehicle's informations
-	void display() const;
+	void info() const;
 };
 

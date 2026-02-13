@@ -17,16 +17,16 @@ public :
 	Road(string, string);
 
 	//Adds a vehicle to the road's queue
-	void addVehicle(Vehicle&);
+	void add_vehicle(Vehicle&);
 	//Moves the road's queue's front vehicle
-	Vehicle* nextVehicle();
+	Vehicle* next_vehicle();
 
-	Vehicle& peekFirst() const;
+	Vehicle& peek_vehicle() const;
 	//Increments the waited time of all this road's vehicles
-	void waitAll();
+	void wait();
 	//Displays the road informations
-	void display();
+	void info();
 	//Returns the number of vehicles in this road's queue
-	int vehicleCount() const;
+	int vehicle_count() const;
 };
 

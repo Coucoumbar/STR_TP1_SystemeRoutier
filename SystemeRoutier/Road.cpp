@@ -1,38 +1,37 @@
 #include "Road.h"
 #include <iostream>
 
-Road::Road(string name, string direction) {
-	this->name = name;
-	this->direction = direction;
+Road::Road(string name, string direction) : 
+	name(name), 
+	direction(direction) {}
+
+void Road::add_vehicle(Vehicle& newVehicle) {
+	vehicles.insert(newVehicle);
 }
 
-void Road::addVehicle(Vehicle& newVehicle) {
-	vehicles.enqueue(newVehicle);
-}
-
-Vehicle* Road::nextVehicle() {
+Vehicle* Road::next_vehicle() {
 	Vehicle* next;
 
-	try { next = new Vehicle(vehicles.dequeue()); }
+	try { next = new Vehicle(vehicles.retrieve()); }
 	catch (runtime_error& e) { next = nullptr; }
 
 	return next;
 }
 
-Vehicle& Road::peekFirst() const {
+Vehicle& Road::peek_vehicle() const {
 	return vehicles.peek();
 }
 
-void Road::waitAll() {
-	vehicles.goThrough(false, true);
+void Road::wait() {
+	vehicles.wait();
 }
 
-void Road::display() {
+void Road::info() {
 	cout << name << "[Leading " << direction << "] : " << endl
 		<< " -> Number of cars waiting [" << vehicles.count() << "] :" << endl;
-	vehicles.goThrough(true, false);
+	vehicles.info();
 }
 
-int Road::vehicleCount() const {
+int Road::vehicle_count() const {
 	return vehicles.count();
 }

@@ -1,66 +1,61 @@
 #include "Intersection.h"
 #include <iostream>
 
-Intersection::Intersection(string name, IntersectionType type, Road& north, Road& south, Road& east, Road& west, int min, int max) {
-	this->name = name;
-	this->type = type;
+Intersection::Intersection(string name, IntersectionType type, Road& north, Road& south, Road& east, Road& west, int min, int max) :
+	name(name),
+	type(type),
+	north(&north),
+	south(&south),
+	east(&east),
+	west(&west),
+	min_green_time(min),
+	max_green_time(max),
+	north_south_light(TrafficLightState::GREEN),
+	east_west_light(TrafficLightState::RED),
+	cycles(0) {}
 
-	this->north = &north;
-	this->south = &south;
-	this->east = &east;
-	this->west = &west;
-
-	this->meridianLight = TrafficLightState::GREEN;
-	this->equatorLight = TrafficLightState::RED;
-
-	this->minGreenTime = min;
-	this->maxGreenTime = max;
-
-	this->cycles = 0;
-}
-
-void Intersection::processCycle() {
+void Intersection::process_cycle() {
 	//Parfaitement au courant du chaos de cette fonction...
 
 	if (type == IntersectionType::FOUR_WAY_STOP)
 	{
 		Road* next = north;
-		if (next->peekFirst().waitedTime() < east->peekFirst().waitedTime()) next = east;
-		if (next->peekFirst().waitedTime() < south->peekFirst().waitedTime()) next = south;
-		if (next->peekFirst().waitedTime() < west->peekFirst().waitedTime()) next = west;
+		if (next->peek_vehicle().get_wait_time() < east->peek_vehicle().get_wait_time()) next = east;
+		if (next->peek_vehicle().get_wait_time() < south->peek_vehicle().get_wait_time()) next = south;
+		if (next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time()) next = west;
 
-		next->nextVehicle();
+		next->next_vehicle();
 
 		cycles++;
 
 		return;
 	}
 	
-	if (meridianLight != TrafficLightState::RED) {
-		north->nextVehicle();
-		south->nextVehicle();
+	if (north_south_light != TrafficLightState::RED) {
+		north->next_vehicle();
+		south->next_vehicle();
 	}
 	else {
-		east->nextVehicle();
-		west->nextVehicle();
+		east->next_vehicle();
+		west->next_vehicle();
 	}
 
-	if (++cycles >= maxGreenTime - 1) updateLights();
+	if (++cycles >= max_green_time - 1) update_lights();
 
-	else if (type == IntersectionType::PRIORITY_LIGHT && cycles > minGreenTime)
+	else if (type == IntersectionType::PRIORITY_LIGHT && cycles > min_green_time)
 	{
-		int meridian = north->vehicleCount() + south->vehicleCount();
-		int equator = east->vehicleCount() + west->vehicleCount();
+		int meridian = north->vehicle_count() + south->vehicle_count();
+		int equator = east->vehicle_count() + west->vehicle_count();
 
-		if (meridianLight != TrafficLightState::RED && meridian < equator) updateLights();
-		else if (equatorLight != TrafficLightState::RED && equator < meridian) updateLights();
+		if (north_south_light != TrafficLightState::RED && meridian < equator) update_lights();
+		else if (east_west_light != TrafficLightState::RED && equator < meridian) update_lights();
 	}
 }
 
-void Intersection::updateLights() {
+void Intersection::update_lights() {
 	//Gets both lights current int value (0 = RED, 1 = YELLOW, 2 = GREEN)
-	int meridian = static_cast<int>(meridianLight);
-	int equator	= static_cast<int>(equatorLight);
+	int meridian = static_cast<int>(north_south_light);
+	int equator	= static_cast<int>(east_west_light);
 
 	//If the result of meridian - equator is positive, then equator is red
 	//If the result of meridian - equator is negative, then meridian is red
@@ -80,28 +75,28 @@ void Intersection::updateLights() {
 	}
 
 	//Updates the value of both lights
-	meridianLight = static_cast<TrafficLightState>(meridian);
-	equatorLight = static_cast<TrafficLightState>(equator);
+	north_south_light = static_cast<TrafficLightState>(meridian);
+	east_west_light = static_cast<TrafficLightState>(equator);
 }
 
-void Intersection::display() const {
-	cout << name << " [" << typeAsString() << "] :" << endl
+void Intersection::info() const {
+	cout << name << " [" << type_as_string() << "] :" << endl
 		<< "Roads informations : " << endl;
-	north->display();
-	east->display();
-	south->display();
-	west->display();
+	north->info();
+	east->info();
+	south->info();
+	west->info();
 }
 
-int Intersection::typeAsInt() const {
+int Intersection::type_as_int() const {
 	return static_cast<int>(type);
 }
 
-int Intersection::stateAsInt(TrafficLightState state) const {
+int Intersection::state_as_int(TrafficLightState state) const {
 	return static_cast<int>(state);
 }
 
-string Intersection::typeAsString() const {
+string Intersection::type_as_string() const {
 	switch (type)
 	{
 		case IntersectionType::PRIORITY_LIGHT:
@@ -113,7 +108,7 @@ string Intersection::typeAsString() const {
 	}
 }
 
-string Intersection::stateAsString(TrafficLightState state) const {
+string Intersection::state_as_string(TrafficLightState state) const {
 	switch (state)
 	{
 		case TrafficLightState::RED:

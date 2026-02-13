@@ -1,2 +1,11 @@
-﻿  Vehicle.cpp
+﻿  Intersection.cpp
+  Queue.cpp
+  Road.cpp
+C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\Road.cpp(16,24): warning C4101: 'e' : variable locale non référencée
+  SystemeRoutier.cpp
+  TrafficSystem.cpp
+  Vehicle.cpp
+  Génération de code en cours...
+C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\Intersection.cpp(126,1): warning C4715: 'Intersection::state_as_string' : les chemins de contrôle ne retournent pas tous une valeur
+C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\Intersection.cpp(114,1): warning C4715: 'Intersection::type_as_string' : les chemins de contrôle ne retournent pas tous une valeur
   SystemeRoutier.vcxproj -> C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\x64\Debug\SystemeRoutier.exe

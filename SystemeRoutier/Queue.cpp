@@ -1,43 +1,39 @@
 #include "Queue.h"
 #include <iostream>
 
-Queue::Queue() {
-	front = nullptr;
-	back = nullptr;
-	size = 0;
-}
+Queue::Queue() : 
+	front_index(nullptr), 
+	back_index(nullptr), 
+	size(0) {}
 
 Queue::~Queue() {
-	while (!isEmpty()) dequeue();
+	while (!is_empty()) erase();
 }
 
-void Queue::enqueue(const Vehicle& newVehicle) {
+void Queue::insert(const Vehicle& newVehicle) {
 	Node* node = new Node;
 	node->data = newVehicle;
 	node->next = nullptr;
 
 	if (size == 0) {
-		front = node;
-		back = node;
+		front_index = node;
+		back_index = node;
 	}
 	else
 	{
-		back->next = node;
-		back = node;
+		back_index->next = node;
+		back_index = node;
 	}
 
 	size++;
 }
 
-Vehicle Queue::dequeue() {
-	if (size == 0)
-	{
-		throw runtime_error("Cannot dequeue, queue is empty.");
-	}
+Vehicle Queue::retrieve() {
+	if (size == 0) throw runtime_error("Cannot retrieve, queue is empty.");
 
-	Node* temp = front;
-	front = front->next;
-	if (front == nullptr) back = nullptr;
+	Node* temp = front_index;
+	front_index = front_index->next;
+	if (front_index == nullptr) back_index = nullptr;
 
 	Vehicle data = temp->data;
 
@@ -48,33 +44,48 @@ Vehicle Queue::dequeue() {
 	return data;
 }
 
-Vehicle& Queue::peek() const {
-	if (size == 0)
-	{
-		cerr << "Cannot peek, queue is empty.";
-		return;
-	}
+void Queue::erase() {
+	//if (size == 0) throw runtime_error("Cannot erase, queue is empty.");
 
-	return front->data;
+	Node* temp = front_index;
+	front_index = front_index->next;
+	if (front_index == nullptr) back_index = nullptr;
+
+	delete temp;
+
+	size--;
+}
+
+Vehicle& Queue::peek() const {
+	if (size == 0)throw runtime_error("Cannot peek, queue is empty.");
+
+	return front_index->data;
 }
 
 int Queue::count() const {
 	return size;
 }
 
-bool Queue::isEmpty() const {
+bool Queue::is_empty() const {
 	return size == 0;
 }
 
-void Queue::goThrough(const bool display, const bool wait) {
-	Node* location = front;
+void Queue::info() const {
+	Node* location = front_index;
 
 	while (location != nullptr)
 	{
-		if (display) location->data.display();
+		location->data.info();
+		location = location->next;
+	}
+}
 
-		if (wait) location->data.wait();
+void Queue::wait() {
+	Node* location = front_index;
 
+	while (location != nullptr)
+	{
+		location->data.wait();
 		location = location->next;
 	}
 }
