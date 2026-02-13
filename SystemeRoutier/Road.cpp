@@ -9,13 +9,17 @@ void Road::add_vehicle(Vehicle& newVehicle) {
 	vehicles.insert(newVehicle);
 }
 
-Vehicle* Road::next_vehicle() {
-	Vehicle* next;
+//Vehicle* Road::next_vehicle() {
+//	Vehicle* next;
+//
+//	try { next = new Vehicle(vehicles.retrieve()); }
+//	catch (runtime_error& e) { next = nullptr; }
+//
+//	return next;
+//}
 
-	try { next = new Vehicle(vehicles.retrieve()); }
-	catch (runtime_error& e) { next = nullptr; }
-
-	return next;
+void Road::next_vehicle() {
+	vehicles.retrieve();
 }
 
 Vehicle& Road::peek_vehicle() const {

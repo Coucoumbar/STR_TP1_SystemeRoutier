@@ -7,7 +7,7 @@ Queue::Queue() :
 	size(0) {}
 
 Queue::~Queue() {
-	while (!is_empty()) erase();
+	while (!is_empty()) retrieve();
 }
 
 void Queue::insert(const Vehicle& newVehicle) {
@@ -28,23 +28,35 @@ void Queue::insert(const Vehicle& newVehicle) {
 	size++;
 }
 
-Vehicle Queue::retrieve() {
-	if (size == 0) throw runtime_error("Cannot retrieve, queue is empty.");
+//Vehicle Queue::retrieve() {
+//	if (size == 0) throw runtime_error("Cannot retrieve, queue is empty.");
+//
+//	Node* temp = front_index;
+//	front_index = front_index->next;
+//	if (front_index == nullptr) back_index = nullptr;
+//
+//	Vehicle data = temp->data;
+//
+//	delete temp;
+//
+//	size--;
+//
+//	return data;
+//}
 
-	Node* temp = front_index;
-	front_index = front_index->next;
-	if (front_index == nullptr) back_index = nullptr;
+//void Queue::erase() {
+//	//if (size == 0) throw runtime_error("Cannot erase, queue is empty.");
+//
+//	Node* temp = front_index;
+//	front_index = front_index->next;
+//	if (front_index == nullptr) back_index = nullptr;
+//
+//	delete temp;
+//
+//	size--;
+//}
 
-	Vehicle data = temp->data;
-
-	delete temp;
-
-	size--;
-
-	return data;
-}
-
-void Queue::erase() {
+void Queue::retrieve() {
 	//if (size == 0) throw runtime_error("Cannot erase, queue is empty.");
 
 	Node* temp = front_index;

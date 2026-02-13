@@ -14,42 +14,56 @@ Intersection::Intersection(string name, IntersectionType type, Road& north, Road
 	east_west_light(TrafficLightState::RED),
 	cycles(0) {}
 
-void Intersection::process_cycle() {
-	//Parfaitement au courant du chaos de cette fonction...
-
-	if (type == IntersectionType::FOUR_WAY_STOP)
+void Intersection::process_cycle(int& waited, int& processed) {
+	if (type == IntersectionType::PRIORITY_LIGHT) 
 	{
-		Road* next = north;
-		if (next->peek_vehicle().get_wait_time() < east->peek_vehicle().get_wait_time()) next = east;
-		if (next->peek_vehicle().get_wait_time() < south->peek_vehicle().get_wait_time()) next = south;
-		if (next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time()) next = west;
+		Road* next = next_road();
 
-		next->next_vehicle();
+		update_road(*next, waited, processed);
 
 		cycles++;
-
-		return;
 	}
-	
-	if (north_south_light != TrafficLightState::RED) {
-		north->next_vehicle();
-		south->next_vehicle();
-	}
-	else {
-		east->next_vehicle();
-		west->next_vehicle();
-	}
-
-	if (++cycles >= max_green_time - 1) update_lights();
-
-	else if (type == IntersectionType::PRIORITY_LIGHT && cycles > min_green_time)
+	else
 	{
-		int meridian = north->vehicle_count() + south->vehicle_count();
-		int equator = east->vehicle_count() + west->vehicle_count();
+		if (north_south_light != TrafficLightState::RED) {
+			update_road(*north, waited, processed);
+			update_road(*south, waited, processed);
+		}
+		else {
+			update_road(*east, waited, processed);
+			update_road(*west, waited, processed);
+		}
 
-		if (north_south_light != TrafficLightState::RED && meridian < equator) update_lights();
-		else if (east_west_light != TrafficLightState::RED && equator < meridian) update_lights();
+		if (++cycles >= max_green_time - 1) update_lights();
+		else if (cycles > min_green_time) priority_cycle();
+
 	}
+
+}
+
+void Intersection::update_road(Road& road, int& waited, int& processed) {
+	if (road.vehicle_count() != 0) {
+		waited = road.peek_vehicle().get_wait_time();
+		processed++;
+		road.next_vehicle();
+	}
+}
+
+void Intersection::priority_cycle() {
+	int meridian = north->vehicle_count() + south->vehicle_count();
+	int equator = east->vehicle_count() + west->vehicle_count();
+
+	if (north_south_light != TrafficLightState::RED && meridian < equator) update_lights();
+	else if (east_west_light != TrafficLightState::RED && equator < meridian) update_lights();
+}
+
+Road* Intersection::next_road() {
+	Road* next = north;
+	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < east->peek_vehicle().get_wait_time()) next = east;
+	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < south->peek_vehicle().get_wait_time()) next = south;
+	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time()) next = west;
+
+	return next;
 }
 
 void Intersection::update_lights() {

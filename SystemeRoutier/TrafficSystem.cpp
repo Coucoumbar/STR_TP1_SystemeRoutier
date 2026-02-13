@@ -11,7 +11,7 @@ void TrafficSystem::add_intersection(Intersection* intersection) {
 
 void TrafficSystem::process_cycles() {
 	for (Intersection* inter : intersections) {
-		inter->process_cycle();
+		inter->process_cycle(total_wait_time, total_vehicles_processed);
 	}
 }
 

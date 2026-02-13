@@ -21,9 +21,11 @@ public :
 	//Adds a vehicle to the back of the queue
 	void insert(const Vehicle&);
 	//Removes the first vehicle from the queue
-	Vehicle retrieve();
+	/*Vehicle retrieve();*/
 	//Erase the first vehicle from the queue
-	void erase();
+	/*void erase();*/
+
+	void retrieve();
 	//Returns the first vehicle from the queue
 	Vehicle& peek() const;
 	//Returns true if the queue is empty

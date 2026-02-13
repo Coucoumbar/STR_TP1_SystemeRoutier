@@ -19,7 +19,8 @@ public :
 	//Adds a vehicle to the road's queue
 	void add_vehicle(Vehicle&);
 	//Moves the road's queue's front vehicle
-	Vehicle* next_vehicle();
+	/*Vehicle* next_vehicle();*/
+	void next_vehicle();
 
 	Vehicle& peek_vehicle() const;
 	//Increments the waited time of all this road's vehicles
