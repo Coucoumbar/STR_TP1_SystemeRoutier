@@ -14,8 +14,29 @@ Intersection::Intersection(string name, IntersectionType type, Road& north, Road
 	east_west_light(TrafficLightState::RED),
 	cycles(0) {}
 
+Intersection::Intersection(string name, IntersectionType type, Road& north, Road& south, Road& east, Road& west, int max) :
+	name(name),
+	type(type),
+	north(&north),
+	south(&south),
+	east(&east),
+	west(&west),
+	max_green_time(max),
+	north_south_light(TrafficLightState::GREEN),
+	east_west_light(TrafficLightState::RED),
+	cycles(0) {}
+
+Intersection::Intersection(string name, IntersectionType type, Road& north, Road& south, Road& east, Road& west) :
+	name(name),
+	type(type),
+	north(&north),
+	south(&south),
+	east(&east),
+	west(&west),
+	cycles(0) {}
+
 void Intersection::process_cycle(int& waited, int& processed) {
-	if (type == IntersectionType::PRIORITY_LIGHT) 
+	if (type == IntersectionType::FOUR_WAY_STOP) 
 	{
 		Road* next = next_road();
 
@@ -39,11 +60,16 @@ void Intersection::process_cycle(int& waited, int& processed) {
 
 	}
 
+	north->wait();
+	south->wait();
+	east->wait();
+	west->wait();
+
 }
 
 void Intersection::update_road(Road& road, int& waited, int& processed) {
 	if (road.vehicle_count() != 0) {
-		waited = road.peek_vehicle().get_wait_time();
+		waited += road.peek_vehicle().get_wait_time();
 		processed++;
 		road.next_vehicle();
 	}
@@ -64,6 +90,10 @@ Road* Intersection::next_road() {
 	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time()) next = west;
 
 	return next;
+}
+
+bool Intersection::has_vehicles() const {
+	return (north->vehicle_count() != 0 || south->vehicle_count() != 0 || east->vehicle_count() != 0 || west->vehicle_count() != 0);
 }
 
 void Intersection::update_lights() {
@@ -94,7 +124,7 @@ void Intersection::update_lights() {
 }
 
 void Intersection::info() const {
-	cout << name << " [" << type_as_string() << "] :" << endl
+	cout << endl << name << " [" << type_as_string() << "] :" << endl
 		<< "Roads informations : " << endl;
 	north->info();
 	east->info();

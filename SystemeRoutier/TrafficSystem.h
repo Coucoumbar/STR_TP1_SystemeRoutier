@@ -22,7 +22,11 @@ public :
 	//Process a cycle for all the intersection in the system
 	void process_cycles();
 	//Displays informations about the intersections of the system
-	void info();
+	void info() const;
+
+	void statistics() const;
+
+	bool has_vehicles() const;
 
 	int get_total_wait_time();
 	int get_total_vehicles_processed();

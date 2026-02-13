@@ -1,10 +1,2 @@
-﻿  Intersection.cpp
-  Queue.cpp
-  Road.cpp
-  SystemeRoutier.cpp
-  TrafficSystem.cpp
-  Vehicle.cpp
-  Génération de code en cours...
-C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\Intersection.cpp(123,1): warning C4715: 'Intersection::type_as_string' : les chemins de contrôle ne retournent pas tous une valeur
-C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\Intersection.cpp(135,1): warning C4715: 'Intersection::state_as_string' : les chemins de contrôle ne retournent pas tous une valeur
+﻿  SystemeRoutier.cpp
   SystemeRoutier.vcxproj -> C:\Users\utilisateur\Desktop\UQAC\Hiver 2026\8INF259 - Structures de données\Code\STR_TP1_SystemeRoutier\SystemeRoutier\x64\Debug\SystemeRoutier.exe

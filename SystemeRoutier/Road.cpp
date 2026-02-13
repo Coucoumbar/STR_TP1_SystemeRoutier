@@ -31,8 +31,7 @@ void Road::wait() {
 }
 
 void Road::info() {
-	cout << name << "[Leading " << direction << "] : " << endl
-		<< " -> Number of cars waiting [" << vehicles.count() << "] :" << endl;
+	cout << endl << name << " (Leading " << direction << ") [Queue : " << vehicle_count() << "]" << endl;
 	vehicles.info();
 }
 

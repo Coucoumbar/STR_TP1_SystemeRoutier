@@ -1,13 +1,17 @@
 #include "Vehicle.h"
 #include <iostream>
 
+int Vehicle::last_id_number = 0;
+
 Vehicle::Vehicle() {}
 
-Vehicle::Vehicle(string id, string type, string destination) : 
-	id(id), 
-	type(type), 
-	destination(destination), 
-	wait_time(0) {}
+Vehicle::Vehicle(string type, string destination) :
+	type(type),
+	destination(destination),
+	wait_time(0) 
+{
+	id = "V" + to_string(++last_id_number);
+}
 
 
 string Vehicle::get_id() const { return id; }
@@ -24,7 +28,5 @@ void Vehicle::wait() {
 }
 
 void Vehicle::info() const {
-	cout << type << " [" << id << "]" << " : " << endl
-		<< " -> Going " << destination << endl 
-		<< " -> Has waited " << wait_time << " cycles" << endl;
+	cout << " -> [" << id << "] " << type << " going " << destination << " [Waited " << wait_time << " cycles]" << endl;
 }

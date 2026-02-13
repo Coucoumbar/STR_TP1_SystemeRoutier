@@ -83,7 +83,11 @@ bool Queue::is_empty() const {
 }
 
 void Queue::info() const {
+	if (size == 0) return;
+
 	Node* location = front_index;
+
+	cout << "Vehicles on this road : " << endl;
 
 	while (location != nullptr)
 	{

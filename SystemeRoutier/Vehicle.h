@@ -12,10 +12,11 @@ private :
 	string type;
 	string destination;
 	int wait_time;
+	static int last_id_number;
 
 public :
 	Vehicle();
-	Vehicle(string, string, string);
+	Vehicle(string, string);
 
 	string get_id() const;
 	string get_type() const;

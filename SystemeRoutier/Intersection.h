@@ -28,6 +28,8 @@ private :
 
 public :
 	Intersection(string, IntersectionType, Road&, Road&, Road&, Road&, int, int);
+	Intersection(string, IntersectionType, Road&, Road&, Road&, Road&, int);
+	Intersection(string, IntersectionType, Road&, Road&, Road&, Road&);
 
 	//Process a light cycle of the intersection
 	void process_cycle(int&, int&);
@@ -35,6 +37,8 @@ public :
 	void update_lights();
 	//Display the intersection's informations
 	void info() const;
+
+	bool has_vehicles() const;
 
 	int type_as_int() const;
 	int state_as_int(TrafficLightState) const;
