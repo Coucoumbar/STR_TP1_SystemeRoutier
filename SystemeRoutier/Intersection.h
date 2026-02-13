@@ -35,5 +35,11 @@ public :
 	void updateLights();
 	//Display the intersection's informations
 	void display() const;
+
+	int typeAsInt() const;
+	int stateAsInt(TrafficLightState) const;
+
+	string typeAsString() const;
+	string stateAsString(TrafficLightState) const;
 };
 

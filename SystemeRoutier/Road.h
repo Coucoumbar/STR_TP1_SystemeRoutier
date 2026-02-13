@@ -20,6 +20,8 @@ public :
 	void addVehicle(Vehicle&);
 	//Moves the road's queue's front vehicle
 	Vehicle* nextVehicle();
+
+	Vehicle& peekFirst() const;
 	//Increments the waited time of all this road's vehicles
 	void waitAll();
 	//Displays the road informations

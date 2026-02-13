@@ -12,6 +12,10 @@ void Vehicle::wait() {
 	waited++;
 }
 
+int Vehicle::waitedTime() const {
+	return waited;
+}
+
 void Vehicle::display() const {
 	cout << type << " [" << id << "]" << " : " << endl
 		<< " -> Going " << destination << endl 

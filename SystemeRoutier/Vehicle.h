@@ -19,6 +19,7 @@ public :
 
 	//Increments the vehicle's waited time
 	void wait();
+	int waitedTime() const;
 	//Displays the vehicle's informations
 	void display() const;
 };

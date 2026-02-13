@@ -19,6 +19,10 @@ Vehicle* Road::nextVehicle() {
 	return next;
 }
 
+Vehicle& Road::peekFirst() const {
+	return vehicles.peek();
+}
+
 void Road::waitAll() {
 	vehicles.goThrough(false, true);
 }

@@ -1,4 +1,5 @@
 #include "Intersection.h"
+#include <iostream>
 
 Intersection::Intersection(string name, IntersectionType type, Road& north, Road& south, Road& east, Road& west, int min, int max) {
 	this->name = name;
@@ -19,32 +20,40 @@ Intersection::Intersection(string name, IntersectionType type, Road& north, Road
 }
 
 void Intersection::processCycle() {
+	//Parfaitement au courant du chaos de cette fonction...
 
-	//Priority light
-	if (type != IntersectionType::FOUR_WAY_STOP)
+	if (type == IntersectionType::FOUR_WAY_STOP)
 	{
-		if (meridianLight != TrafficLightState::RED)
-		{
-			north->nextVehicle();
-			south->nextVehicle();
-		}
-		else
-		{
-			east->nextVehicle();
-			west->nextVehicle();
-		}
+		Road* next = north;
+		if (next->peekFirst().waitedTime() < east->peekFirst().waitedTime()) next = east;
+		if (next->peekFirst().waitedTime() < south->peekFirst().waitedTime()) next = south;
+		if (next->peekFirst().waitedTime() < west->peekFirst().waitedTime()) next = west;
 
-		if (++cycles >= maxGreenTime - 1) {
-			updateLights();
-		}
-		else if (type == IntersectionType::PRIORITY_LIGHT && cycles > minGreenTime)
-		{
+		next->nextVehicle();
 
-		}
+		cycles++;
+
+		return;
 	}
-	else
-	{
+	
+	if (meridianLight != TrafficLightState::RED) {
+		north->nextVehicle();
+		south->nextVehicle();
+	}
+	else {
+		east->nextVehicle();
+		west->nextVehicle();
+	}
 
+	if (++cycles >= maxGreenTime - 1) updateLights();
+
+	else if (type == IntersectionType::PRIORITY_LIGHT && cycles > minGreenTime)
+	{
+		int meridian = north->vehicleCount() + south->vehicleCount();
+		int equator = east->vehicleCount() + west->vehicleCount();
+
+		if (meridianLight != TrafficLightState::RED && meridian < equator) updateLights();
+		else if (equatorLight != TrafficLightState::RED && equator < meridian) updateLights();
 	}
 }
 
@@ -73,4 +82,45 @@ void Intersection::updateLights() {
 	//Updates the value of both lights
 	meridianLight = static_cast<TrafficLightState>(meridian);
 	equatorLight = static_cast<TrafficLightState>(equator);
+}
+
+void Intersection::display() const {
+	cout << name << " [" << typeAsString() << "] :" << endl
+		<< "Roads informations : " << endl;
+	north->display();
+	east->display();
+	south->display();
+	west->display();
+}
+
+int Intersection::typeAsInt() const {
+	return static_cast<int>(type);
+}
+
+int Intersection::stateAsInt(TrafficLightState state) const {
+	return static_cast<int>(state);
+}
+
+string Intersection::typeAsString() const {
+	switch (type)
+	{
+		case IntersectionType::PRIORITY_LIGHT:
+			return "Priority Light";
+		case IntersectionType::FIXED_LIGHT:
+			return "Fixed Light";
+		case IntersectionType::FOUR_WAY_STOP:
+			return "Four Way Stop";
+	}
+}
+
+string Intersection::stateAsString(TrafficLightState state) const {
+	switch (state)
+	{
+		case TrafficLightState::RED:
+			return "RED";
+		case TrafficLightState::GREEN:
+			return "GREEN";
+		case TrafficLightState::YELLOW:
+			return "YELLOW";
+	}
 }
