@@ -56,7 +56,7 @@ void Intersection::process_cycle(int& waited, int& processed) {
 		}
 
 		if (++cycles >= max_green_time - 1) update_lights();
-		else if (cycles > min_green_time) priority_cycle();
+		else if (cycles >= min_green_time) priority_cycle();
 
 	}
 
@@ -85,9 +85,36 @@ void Intersection::priority_cycle() {
 
 Road* Intersection::next_road() {
 	Road* next = north;
-	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < east->peek_vehicle().get_wait_time()) next = east;
-	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < south->peek_vehicle().get_wait_time()) next = south;
-	if (next->vehicle_count() == 0 || next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time()) next = west;
+
+	if (next->vehicle_count() == 0) next = east;
+	if (next->vehicle_count() == 0) next = south;
+	if (next->vehicle_count() == 0) next = west;
+
+	if (next->vehicle_count() == 0) return next;
+
+	if (east->vehicle_count() != 0) 
+	{
+		if (next->peek_vehicle().get_wait_time() < east->peek_vehicle().get_wait_time())
+		{
+			next = east;
+		}
+	}
+
+	if (south->vehicle_count() != 0)
+	{
+		if (next->peek_vehicle().get_wait_time() < south->peek_vehicle().get_wait_time())
+		{
+			next = south;
+		}
+	}
+
+	if (west->vehicle_count() != 0)
+	{
+		if (next->peek_vehicle().get_wait_time() < west->peek_vehicle().get_wait_time())
+		{
+			next = west;
+		}
+	}
 
 	return next;
 }

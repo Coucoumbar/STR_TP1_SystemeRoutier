@@ -69,7 +69,7 @@ void Queue::retrieve() {
 }
 
 Vehicle& Queue::peek() const {
-	if (size == 0)throw runtime_error("Cannot peek, queue is empty.");
+	if (size == 0) throw runtime_error("Cannot peek, queue is empty.");
 
 	return front_index->data;
 }

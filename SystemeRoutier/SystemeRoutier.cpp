@@ -21,7 +21,7 @@ int main()
 
     //initiate_even(north_road, south_road, east_road, west_road, 30);
 
-    //initiate_one_way(north_road, south_road, east_road, west_road, 60);
+    initiate_one_way(north_road, south_road, east_road, west_road, 60);/**/
 
     //initiate_unbalanced(north_road, south_road, east_road, west_road, 50, 10);
 
@@ -29,11 +29,11 @@ int main()
 
     //[INTERSECTION TYPE OPTIONS]//
 
-    Intersection intersection{ "Main Intersection", IntersectionType::PRIORITY_LIGHT, north_road, south_road, east_road, west_road, 2, 5 };
+    //Intersection intersection{ "Main Intersection", IntersectionType::PRIORITY_LIGHT, north_road, south_road, east_road, west_road, 2, 5 };
 
     //Intersection intersection{ "Main Intersection", IntersectionType::FIXED_LIGHT, north_road, south_road, east_road, west_road, 3 };
 
-    //Intersection intersection{"Main Intersection", IntersectionType::FOUR_WAY_STOP, north_road, south_road, east_road, west_road};
+    Intersection intersection{"Main Intersection", IntersectionType::FOUR_WAY_STOP, north_road, south_road, east_road, west_road};/**/
 
 
 
